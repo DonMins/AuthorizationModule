@@ -3,22 +3,34 @@ package com.example.testspring.demo.controller;
 import com.example.testspring.demo.entity.User;
 import com.example.testspring.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
-@RestController
-@RequestMapping("/log")
-
+@Controller
 public class AuthorizationController {
 
     @Autowired
     private UserService userService;
 
-    @GetMapping
-    public ResponseEntity<User> log() {
-        User user = userService.createNewLog();
-        return ResponseEntity.ok(user);
+    @GetMapping(value = "/login")
+    public String info(Model model) {
+////        return userService.getDataFromPython();
+//        model.addAttribute("login", "");
+//        model.addAttribute("password", "mska");
+
+        return "login";
     }
+
+    @GetMapping(value = "/log")
+    public String info(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
+//        return userService.getDataFromPython();
+        model.addAttribute("command", "");
+        model.addAttribute("username", "mska");
+
+        return "login";
+    }
+
 }

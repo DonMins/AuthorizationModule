@@ -5,4 +5,6 @@ import com.example.testspring.demo.entity.User;
 public interface UserService {
 
     User createNewLog();
+
+    String getDataFromPython();
 }

@@ -25,6 +25,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private RoleRepository roleRepository;
 
+
     @Override
     public User createNewLog() {
         User user1 = new User();
@@ -40,4 +41,36 @@ public class UserServiceImpl implements UserService {
         LOG.info("saved new log: " + user.toString());
         return user;
     }
+
+    @Override
+    public String getDataFromPython() {
+        return "";
+//        RestTemplate restTemplate = new RestTemplate();
+//        String fooResourceUrl = "http://localhost:8000";
+////        ResponseEntity<String> response = restTemplate.getForEntity(fooResourceUrl + "/index", String.class);
+//
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setContentType(MediaType.APPLICATION_JSON);
+//        JSONObject personJsonObject = new JSONObject();
+//
+//        personJsonObject.put("id", 1);
+//        personJsonObject.put("name", "John");
+//
+//        HttpEntity<String> request =  new HttpEntity<String>(personJsonObject.toString(), headers);
+//        String personResultAsJsonStr = restTemplate.postForObject(fooResourceUrl + "/index2/", request, String.class);
+//        return personResultAsJsonStr;
+    }
+
+//    @Override
+//    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+//        User userEntity = null;
+//        try {
+//            userEntity = repository.findUserByLogin(login);
+//            return new CustomUser(userEntity);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            throw new UsernameNotFoundException("User " + login + " was not found in the database");
+//        }
+//    }
+
 }
