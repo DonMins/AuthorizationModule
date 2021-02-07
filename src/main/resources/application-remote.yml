@@ -19,6 +19,10 @@ spring:
     view:
       prefix: webapp/WEB-INF/view/
       suffix: .jsp
+#  mvc:
+#    view:
+#      prefix: /webapp/WEB-INF/view/
+#      suffix: .html
 
 server:
   port: 8099

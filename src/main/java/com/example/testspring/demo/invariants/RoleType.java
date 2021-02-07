@@ -2,7 +2,7 @@ package com.example.testspring.demo.invariants;
 
 public enum RoleType {
 
-    ROLE_ADMIN("ROLE_ADMIN", "Администартор всего"),
+    ROLE_ADMIN("ROLE_ADMIN", "Администратор всего"),
     ROLE_USER("ROLE_USER", "Роль по умолчанию");
 
     private String roleName;

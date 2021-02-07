@@ -11,31 +11,14 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link media="screen" href="${contextPath}/css/main.css" type="text/css" rel="stylesheet">
 </head>
-<body id="cas" class="auth">
-<div class="all clear">
-    <div class="wrapper clear">
-        <div class="container clear">
-            <div class="outer clear">
-                <div class="top box">
-                    <div class="innerHead pr box" id="header">
-                        <div class="startHeadGover">
-                            EEG Labs
-                        </div>
-                        <img alt="" src="<c:url value=""/>" class="db startHeadTitle">
-
-                        <div class="startHeadDelem1"></div>
-
-
-                    </div>
-
-                </div>
-                <div class="inner clear">
-                    <div id="content" class="box">
-                    </div>
-                </div>
-            </div>
+<div class="top box">
+    <div class="innerHead pr box" id="header">
+        <div class="startHeadGover">
+            EEG Labs
         </div>
+        <img alt="" src="" class="db startHeadTitle">
+        <div class="startHeadDelem1"></div>
     </div>
+
 </div>
-</body>
 </html>
