@@ -7,6 +7,18 @@ spring:
     password: work_db
     driverClassName: org.postgresql.Driver
 
+  mail:
+    host: smtp.gmail.com
+    username: promaks13@gmail.com
+    password: Maksim89370609915
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
 
   jpa:
     hibernate:
@@ -19,10 +31,6 @@ spring:
     view:
       prefix: webapp/WEB-INF/view/
       suffix: .jsp
-#  mvc:
-#    view:
-#      prefix: /webapp/WEB-INF/view/
-#      suffix: .html
 
 server:
   port: 8099

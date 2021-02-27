@@ -22,17 +22,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                    .antMatchers("/main").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
-                    .antMatchers("/saveUser").hasAuthority("ROLE_ADMIN")
-                    .anyRequest().authenticated()
+                .antMatchers("/css/**", "/js/**", "/images/**").permitAll()
+                .antMatchers("/registration","/forgot_password","/reset_password","/messagePage").not().fullyAuthenticated()
+                .antMatchers("/main").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
+                .antMatchers("/saveUser", "/info").hasAuthority("ROLE_ADMIN")
+                .anyRequest().authenticated()
                 .and()
-                    .formLogin()
-                    .loginPage("/login")
-                    .defaultSuccessUrl("/main",true)
-                    .permitAll()
+                .formLogin()
+                .loginPage("/login")
+                .defaultSuccessUrl("/main", true)
+                .permitAll()
                 .and()
-                    .logout()
-                    .permitAll();
+                .logout()
+                .permitAll();
     }
 
     @Override

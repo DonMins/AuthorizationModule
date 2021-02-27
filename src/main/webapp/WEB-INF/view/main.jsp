@@ -1,9 +1,9 @@
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <%@page contentType="text/html;charset=UTF-8" language="java" %>
-<jsp:directive.include file="base.jsp" />
-
+<%--<jsp:directive.include file="base.jsp" />--%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 
 <html>
@@ -11,37 +11,64 @@
     <title>Главная страница</title>
     <title></title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link media="screen" href="${contextPath}/css/main.css" type="text/css" rel="stylesheet">
+    <link media="screen" href="${contextPath}/css/login.css" type="text/css" rel="stylesheet">
+    <%--    <link media="screen" href="${contextPath}/css/main.css" type="text/css" rel="stylesheet">--%>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link media="screen" href="${contextPath}/css/menu.css" type="text/css" rel="stylesheet">
+
 </head>
 <body>
 <div>
     <div>
-        <jsp:directive.include file="header.jsp"/>
-        <form action="${pageContext.request.contextPath}/logout" method="post">
-            <input type="submit" value="Выйти"/>
-        </form>
+
+        <div style="    display: -webkit-box;">
+            <ul class="menu">
+                <li><a href="#!">Home</a></li>
+                <li><a href="#!">About</a></li>
+                <li><a href="#!">Contact</a></li>
+                <li><a href="#!">Faq</a></li>
+            </ul>
+            <h3 style="margin-top: 40px;margin-left: auto;margin-right: 1em; ">
+                ${pageContext.request.userPrincipal.name}</h3>
+
+            <form action="${pageContext.request.contextPath}/logout" method="post">
+                <input style=" margin-left: auto;
+                     margin-top: 30px;
+                     height: 40px;
+                     margin-right: 1em;" type="submit" value="Выйти"/>
+            </form>
+        </div>
+
+
+        <div sec:authorize="isAuthenticated()">
+            Text visible only to authenticated users.
+        </div>
+
+        <sec:authorize access="hasRole('ROLE_ADMIN')">
+            <p>Must have ROLE_ADMIN</p>
+        </sec:authorize>
+
+
     </div>
-    <div id="main_content" style="height: 600px"> </div>
 </div>
 
-<script type="text/javascript">
-    Ext.onReady(function () {
+<%--<script type="text/javascript">--%>
+<%--    Ext.onReady(function () {--%>
 
-        var reports = Ext.create('Ext.panel.Panel', {
-            title: 'Hello',
-            width: "100%",
-            renderTo: 'main_content'
-        });
-        window.onresize = function (event) {
-            reports.setHeight(400);
-        }
-    });
-</script>
+<%--        var reports = Ext.create('Ext.panel.Panel', {--%>
+<%--            title: 'Hello',--%>
+<%--            width: "100%",--%>
+<%--            renderTo: 'main_content'--%>
+<%--        });--%>
+<%--        window.onresize = function (event) {--%>
+<%--            reports.setHeight(400);--%>
+<%--        }--%>
+<%--    });--%>
+<%--</script>--%>
 
 
 </body>
 </html>
-
 
 
 <%--<html>--%>

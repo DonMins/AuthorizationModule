@@ -1,5 +1,6 @@
 package com.example.testspring.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -38,6 +39,14 @@ public class User implements Serializable, UserDetails {
     @Column(name = "user_password", nullable = false, length = 65535)
     private String password;
 
+    @Column(name = "user_email", unique = true, length = 65535)
+    private String email;
+
+    @Column(name = "reset_password_token", length = 30)
+    @JsonIgnore
+    private String resetPasswordToken;
+
+
     @ManyToMany(fetch = FetchType.EAGER)
 
     @JoinTable(name="USER_ROLE",
@@ -74,5 +83,9 @@ public class User implements Serializable, UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public String getUserName() {
+        return userName;
     }
 }

@@ -9,6 +9,7 @@ import com.example.testspring.demo.invariants.RoleType;
 import lombok.SneakyThrows;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -20,6 +21,7 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 @Service
@@ -28,7 +30,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final static Logger LOG = Logger.getLogger(AuthorizationController.class.getName());
 
     @Autowired
-    private UserRepository repository;
+    private UserRepository userRepository;
 
     @PersistenceContext
     private EntityManager em;
@@ -50,7 +52,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         role.setRole(RoleType.ROLE_ADMIN);
         roleRepository.save(role);
         user1.setRoleSet(Collections.singleton(role));
-        User user = repository.save(user1);
+        User user = userRepository.save(user1);
         LOG.info("saved new log: " + user.toString());
         return user;
     }
@@ -82,7 +84,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     @SneakyThrows
     public UserDetails loadUserByUsername(String login)  {
-        User user = repository.findUserByLogin(login);
+        User user = userRepository.findUserByLogin(login);
 
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
@@ -92,24 +94,25 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     public List<User> allUsers() {
-        return repository.findAll();
+        return userRepository.findAll();
     }
 
-    public void saveUser(User user) {
-        User userFromDB = repository.findUserByLogin(user.getLogin());
+    public boolean saveUser(User user) {
+        User userFromDB = userRepository.findUserByLogin(user.getLogin());
 
         if (userFromDB != null) {
-            return;
+            return false;
         }
 
         user.setRoleSet(Collections.singleton(roleRepository.findRoleByRole(RoleType.ROLE_USER)));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        repository.save(user);
+        userRepository.save(user);
+        return true;
     }
 
     public boolean deleteUser(String userId) {
-        if (repository.findById(userId).isPresent()) {
-            repository.deleteById(userId);
+        if (userRepository.findById(userId).isPresent()) {
+            userRepository.deleteById(userId);
             return true;
         }
         return false;
@@ -119,5 +122,28 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 //        return em.createQuery("SELECT u FROM User u WHERE u.id > :paramId", User.class)
 //                .setParameter("paramId", idMin).getResultList();
 //    }
+
+    @Override
+    public void updateResetPasswordToken(@NonNull String token, @NonNull String email) throws Exception {
+        User user = userRepository.findUserByEmail(email);
+        if (Objects.nonNull(user)) {
+            user.setResetPasswordToken(token);
+            userRepository.save(user);
+        } else {
+            throw new Exception("Could not find any user with the email " + email);
+        }
+    }
+
+    public User getByResetPasswordToken(@NonNull String token) {
+        return userRepository.findUserByResetPasswordToken(token);
+    }
+
+    public void updatePassword(@NonNull User user, @NonNull String newPassword) {
+        String encodedPassword = bCryptPasswordEncoder.encode(newPassword);
+        user.setPassword(encodedPassword);
+
+        user.setResetPasswordToken(null);
+        userRepository.save(user);
+    }
 
 }

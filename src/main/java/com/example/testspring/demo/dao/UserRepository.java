@@ -11,4 +11,7 @@ import javax.transaction.Transactional;
 public interface UserRepository extends JpaRepository<User, String> {
 
     User findUserByLogin(String login);
+    User findUserByEmail(String email);
+    User findUserByResetPasswordToken(String token);
+
 }
