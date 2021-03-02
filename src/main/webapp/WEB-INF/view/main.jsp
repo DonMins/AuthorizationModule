@@ -15,18 +15,29 @@
     <%--    <link media="screen" href="${contextPath}/css/main.css" type="text/css" rel="stylesheet">--%>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
     <link media="screen" href="${contextPath}/css/menu.css" type="text/css" rel="stylesheet">
+    <script src="${contextPath}/js/plottingEEG.js" type="text/javascript"></script>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartist/0.11.4/chartist.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartist/0.11.4/chartist.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chartist/0.11.4/chartist.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartist/0.11.4/chartist.min.js.map"></script>
 
 </head>
 <body>
 <div>
     <div>
 
-        <div style="    display: -webkit-box;">
+        <div style=" color:white; display: -webkit-box;">
             <ul class="menu">
-                <li><a href="#!">Home</a></li>
-                <li><a href="#!">About</a></li>
-                <li><a href="#!">Contact</a></li>
-                <li><a href="#!">Faq</a></li>
+                <li><a href="#!">Главная</a></li>
+                <li><a href="#!">Инстументы обработки</a></li>
+                <li><a href="#!">Анализ</a></li>
+                <li><a href="#!">Руководство использования</a></li>
             </ul>
             <h3 style="margin-top: 40px;margin-left: auto;margin-right: 1em; ">
                 ${pageContext.request.userPrincipal.name}</h3>
@@ -47,7 +58,18 @@
         <sec:authorize access="hasRole('ROLE_ADMIN')">
             <p>Must have ROLE_ADMIN</p>
         </sec:authorize>
+        <div id="myfirstchart" style="height: 250px; width: 1000px; background:white"></div>
+        <script>
+            plotEEG()
+        </script>
 
+        <div style="color: whitesmoke">
+            <form enctype="multipart/form-data" method="post">
+                <p >Выберите ЭЭГ для загрузки </p>
+                <p><input type="file" name="eeg" multiple accept=".txt">
+                    <input type="submit" value="Отправить"></p>
+            </form>
+        </div>
 
     </div>
 </div>
