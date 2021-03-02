@@ -32,23 +32,24 @@
 <div>
     <div>
 
-        <div style=" color:white; display: -webkit-box;">
-            <ul class="menu">
-                <li><a href="#!">Главная</a></li>
-                <li><a href="#!">Инстументы обработки</a></li>
-                <li><a href="#!">Анализ</a></li>
-                <li><a href="#!">Руководство использования</a></li>
-            </ul>
-            <h3 style="margin-top: 40px;margin-left: auto;margin-right: 1em; ">
-                ${pageContext.request.userPrincipal.name}</h3>
+<%--        <div style="    display: -webkit-box;">--%>
+<%--            <ul class="menu">--%>
+<%--                <li><a href="#!">Home</a></li>--%>
+<%--                <li><a href="#!">About</a></li>--%>
+<%--                <li><a href="#!">Contact</a></li>--%>
+<%--                <li><a href="#!">Faq</a></li>--%>
+<%--            </ul>--%>
+<%--            <h3 style="margin-top: 40px;margin-left: auto;margin-right: 1em; ">--%>
+<%--                ${pageContext.request.userPrincipal.name}</h3>--%>
 
-            <form action="${pageContext.request.contextPath}/logout" method="post">
-                <input style=" margin-left: auto;
-                     margin-top: 30px;
-                     height: 40px;
-                     margin-right: 1em;" type="submit" value="Выйти"/>
-            </form>
-        </div>
+<%--            <form action="${pageContext.request.contextPath}/logout" method="post">--%>
+<%--                <input style=" margin-left: auto;--%>
+<%--                     margin-top: 30px;--%>
+<%--                     height: 40px;--%>
+<%--                     margin-right: 1em;" type="submit" value="Выйти"/>--%>
+<%--            </form>--%>
+<%--        </div>--%>
+    <jsp:include page="heder2.jsp"/>
 
 
         <div sec:authorize="isAuthenticated()">
@@ -63,13 +64,7 @@
             plotEEG()
         </script>
 
-        <div style="color: whitesmoke">
-            <form enctype="multipart/form-data" method="post">
-                <p >Выберите ЭЭГ для загрузки </p>
-                <p><input type="file" name="eeg" multiple accept=".txt">
-                    <input type="submit" value="Отправить"></p>
-            </form>
-        </div>
+    <jsp:include page="footer.jsp"/>
 
     </div>
 </div>
