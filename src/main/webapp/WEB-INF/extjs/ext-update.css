@@ -1,0 +1,61 @@
+.x-form-field-readonly {
+    color: gray;
+}
+
+.x-column-header {
+    border-right: 1px solid #c5c5c5;
+    color: black;
+    font: normal 11px/13px tahoma, arial, verdana, sans-serif;
+    background-image: none;
+    background-color: #c5c5c5;
+    background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #f9f9f9), color-stop(100%, #e3e4e6));
+    background-image: -webkit-linear-gradient(top, #f9f9f9, #e3e4e6);
+    background-image: -moz-linear-gradient(top, #f9f9f9, #e3e4e6);
+    background-image: -o-linear-gradient(top, #f9f9f9, #e3e4e6);
+    background-image: -ms-linear-gradient(top, #f9f9f9, #e3e4e6);   /*this line needed to support IE 11+*/
+    background-image: linear-gradient(top, #f9f9f9, #e3e4e6);
+}
+
+.x-column-header-over,
+.x-column-header-sort-ASC,
+.x-column-header-sort-DESC {
+    background-image: none;
+    background-color: #aaccf6;
+    background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ebf3fd), color-stop(39%, #ebf3fd), color-stop(40%, #d9e8fb), color-stop(100%, #d9e8fb));
+    background-image: -webkit-linear-gradient(top, #ebf3fd, #ebf3fd 39%, #d9e8fb 40%, #d9e8fb);
+    background-image: -moz-linear-gradient(top, #ebf3fd, #ebf3fd 39%, #d9e8fb 40%, #d9e8fb);
+    background-image: -o-linear-gradient(top, #ebf3fd, #ebf3fd 39%, #d9e8fb 40%, #d9e8fb);
+    background-image: -ms-linear-gradient(top, #ebf3fd, #ebf3fd 39%, #d9e8fb 40%, #d9e8fb); /*this line needed to support IE 11+*/
+    background-image: linear-gradient(top, #ebf3fd, #ebf3fd 39%, #d9e8fb 40%, #d9e8fb);
+}.x-grid-header-ct {
+     border: 1px solid #99bce8;
+     border-bottom-color: #c5c5c5;
+     background-color: #c5c5c5;
+     background-image: none;
+     background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #f9f9f9), color-stop(100%, #e3e4e6));
+     background-image: -webkit-linear-gradient(top, #f9f9f9, #e3e4e6);
+     background-image: -moz-linear-gradient(top, #f9f9f9, #e3e4e6);
+     background-image: -o-linear-gradient(top, #f9f9f9, #e3e4e6);
+     background-image: -ms-linear-gradient(top, #f9f9f9, #e3e4e6); /*this line needed to support IE 11+*/
+     background-image: linear-gradient(top, #f9f9f9, #e3e4e6);
+ }
+
+.x-form-checkbox[disabled] {
+    background-position: -39px 0px;
+}
+.x-form-cb-checked .x-form-checkbox[disabled] {
+    background-position: 0px -26px;
+}
+
+/* line 14, ../../../ext-theme-base/sass/src/form/field/Trigger.scss */
+.x-form-trigger-wrap {
+    vertical-align: top;
+    border-collapse: separate;
+    position: relative; /*needed for ReferenceField to display hyperlink over input field*/
+}
+
+.link-in-reference-field {
+    position: absolute;
+    top: 2px;
+    left: 1px;
+}
