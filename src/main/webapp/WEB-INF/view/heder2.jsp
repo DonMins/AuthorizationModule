@@ -7,7 +7,11 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div>
-    <div style="    display: -webkit-box; background: red">
+    <div style="
+    display: -webkit-box;
+     height: 80px;
+     background: linear-gradient(90deg, rgba(28,29,34,1), rgba(34,46,64,1), rgba(81,195,184,1));
+">
         <ul class="menu">
             <li><a href="#!">Home</a></li>
             <li><a href="#!">About</a></li>

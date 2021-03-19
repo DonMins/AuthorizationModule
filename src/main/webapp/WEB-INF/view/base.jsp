@@ -5,8 +5,11 @@
 
 <html>
 <head>
-    <script src="<c:url value="/extjs/build/ext-all.js"/>" type="text/javascript"></script>
-    <link href="<c:url value="/extjs/build/classic/theme-material/resources/theme-material-all.css"/>" rel="stylesheet"
+    <script src="<c:url value="/extjs/ext-all-debug.js"/>" type="text/javascript"></script>
+    <link href="<c:url value="/extjs/ext-theme-neptune/ext-theme-neptune-all-debug.css"/>" rel="stylesheet"
           type="text/css">
+    <script>
+        BASE_HTTP = "http://localhost:8000"
+    </script>
 </head>
 </html>

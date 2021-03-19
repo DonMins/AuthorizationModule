@@ -1,118 +1,227 @@
 function plotEEG() {
-    // Morris.Line({
-    //     //Контейнер для вывода графика
-    //     element: 'myfirstchart',
-    //     //Данные для графика
-    //     data: [
-    //         {time: '1', y: "F7", value: 10},
-    //         {time: '2', y: "F4", value: 35},
-    //         {time: '3', y: "F8", value: 10},
-    //         {time: '4', y: "T3", value: 11},
-    //         {time: '5', y: "C3", value: 45},
-    //         {time: '6', y: "Cz", value: 25},
-    //         {time: '7', y: "C4", value: 24},
-    //         {time: '8', y: "T4", value: 10}
-    //     ],
-    //     //Массив занчений для оси X
-    //     xkey: 'time',
-    //     parseTime: false,
-    //
-    //
-    //
-    //     //Префикс в конце для оси Y
-    //     postUnits: '',
-    //
-    //     //Коридор цены за 1 доллар
-    //     // goals: [45.0, 27.0],
-    //     goalStrokeWidth: 2,
-    //     goalLineColors: ['#d9534f'],
-    //
-    //     //Событийные линии по оси X
-    //     // events: ['2014-01-01', '2015-10-01'],
-    //     eventStrokeWidth: 2,
-    //     eventLineColors: ['#428bca'],
-    //
-    //     //Цвет линий
-    //     lineColors: ['#5cb85c', '#f0ad4e'],
-    //     //Выводимые линии
-    //     ykeys: ['value'],
-    //     //Названия линий
-    //     // labels: ['Нефть', 'Рубль'],
-    //     pointSize: 0,
-    //     hideHover: 'always'
-    // });
-    var data =  [
-        [
-            0.257135,
-            0.353833,
-            0.372726,
-            0.215045,
-            -0.085169,
-            -0.217192,
-            -0.236050,
-            -0.205985,
-            -0.100981,
-            0.010924 ,
-            0.080193,
-            0.108991,
-            0.145441,
-            0.195406,
-            0.223409,
-            0.189005,
-            0.048140,
-            -0.121078,
-            -0.196168,
-            -0.220563,
-            -0.224201,
-            -0.231030,
-            -0.265877
-        ],
-        [
-            0.141753 +2,
-            0.257629+2,
-            0.333135+2,
-            0.303980+2,
-            0.072379+2,
-            -0.132535+2,
-            -0.237868+2,
-            -0.267374+2,
-            -0.198074+2,
-            -0.096482+2,
-            0.000000+2,
-            0.084909+2,
-            0.147284+2,
-            0.209403+2,
-            0.279672+2,
-            0.352285+2,
-            0.332228+2,
-            0.093437+2,
-            -0.106658+2,
-            -0.214003+2,
-            -0.270745+2,
-            -0.313804+2,
-            -0.374376+2,
-        ]
-    ];
+    Ext.define('s', {
+        extend: 'Ext.data.Model',
+        fields: ["T", "F7", "F3", "F4", "F8", "T3", "C3", "Cz", "C4", "T5", "P3", "Pz", "P4", "T6", "O1", "O2"]
+    });
 
-    return new Chartist.Line('#myfirstchart', {
-        labels: [1, 2, 3],
-        series: data
-    }, {
-        low: 0,
-        high: 1.5,
-        showPoint: false,
-        fullWidth: true,
-        axisY: {
-            labelInterpolationFnc: function (value) {
-                debugger;
-                if (value === data[0][0]) {
-                    return "T1";
-                } else if (value === data[1][0]) {
-                    return "T2"
-                }
+    var store = Ext.create('Ext.data.JsonStore', {
+        model: 's',
+        itemId: 'mystore',
+        proxy: {
+            type: 'ajax',
+            url: 'http://localhost:8000/index',
+            reader: {
+                type: 'json',
+// root: 'data',
             },
-            type: Chartist.FixedScaleAxis,
-            ticks: [data[0][0], data[1][0]],
         },
+        autoLoad: true,
+        listeners: {
+            load: function (store, records, success) {
+                console.log(records)
+            }
+        }
+// data: [
+// { 'name': 'metric one', 'data1': 10, 'data2': 12, 'data3': 14, 'data4': 8, 'data5': 13 },
+// { 'name': 'metric two', 'data1': 7, 'data2': 8, 'data3': 16, 'data4': 10, 'data5': 3 },
+// { 'name': 'metric three', 'data1': 5, 'data2': 2, 'data3': 14, 'data4': 12, 'data5': 7 },
+// { 'name': 'metric four', 'data1': 2, 'data2': 14, 'data3': 6, 'data4': 1, 'data5': 23 },
+// { 'name': 'metric five', 'data1': 4, 'data2': 4, 'data3': 36, 'data4': 13, 'data5': 33 }
+// ]
+    });
+
+    debugger;
+    var mainPanel = Ext.create('Ext.chart.Chart', {
+        renderTo: 'main_content',
+        width: '100%',
+        height: 800,
+        store: store,
+        axes: [
+            {
+                type: 'Numeric',
+                position: 'left',
+                fields: ['F7','F3'],
+                label: {
+                    renderer: Ext.util.Format.numberRenderer('0,0')
+                },
+                title: 'Датчики',
+                grid: true,
+                minimum: 0,
+                maximum: 80
+            },
+            {
+                type: 'Category',
+                position: 'bottom',
+                fields: ['T'],
+                title: 'Sample Metrics'
+            }
+        ],
+        series: [
+            {
+                type: 'line',
+                highlight: {
+                    size: 7,
+                    radius: 7
+                },
+                axis: 'left',
+                xField: 'T',
+                yField: 'F7',
+                showMarkers:false
+            },
+            {
+                type: 'line',
+                highlight: {
+                    size: 7,
+                    radius: 7
+                },
+                axis: 'left',
+                xField: 'T',
+                yField: 'F3',
+                showMarkers:false
+            },
+            {
+                type: 'line',
+                highlight: {
+                    size: 7,
+                    radius: 7
+                },
+                axis: 'left',
+                xField: 'T',
+                yField: 'F4',
+                showMarkers:false
+            },
+            {
+                type: 'line',
+                highlight: {
+                    size: 7,
+                    radius: 7
+                },
+                axis: 'left',
+                xField: 'T',
+                yField: 'F8',
+                showMarkers:false
+            },
+            {
+                type: 'line',
+                highlight: {
+                    size: 7,
+                    radius: 7
+                },
+                axis: 'left',
+                xField: 'T',
+                yField: 'T3',
+                showMarkers:false
+            },
+            {
+                type: 'line',
+                highlight: {
+                    size: 7,
+                    radius: 7
+                },
+                axis: 'left',
+                xField: 'T',
+                yField: 'C3',
+                showMarkers:false
+            },
+            {
+                type: 'line',
+                highlight: {
+                    size: 7,
+                    radius: 7
+                },
+                axis: 'left',
+                xField: 'T',
+                yField: 'Cz',
+                showMarkers:false
+            },
+            {
+                type: 'line',
+                highlight: {
+                    size: 7,
+                    radius: 7
+                },
+                axis: 'left',
+                xField: 'T',
+                yField: 'C4',
+                showMarkers:false
+            },
+            {
+                type: 'line',
+                highlight: {
+                    size: 7,
+                    radius: 7
+                },
+                axis: 'left',
+                xField: 'T',
+                yField: 'T5',
+                showMarkers:false
+            },
+            {
+                type: 'line',
+                highlight: {
+                    size: 7,
+                    radius: 7
+                },
+                axis: 'left',
+                xField: 'T',
+                yField: 'P3',
+                showMarkers:false
+            },
+            {
+                type: 'line',
+                highlight: {
+                    size: 7,
+                    radius: 7
+                },
+                axis: 'left',
+                xField: 'T',
+                yField: 'Pz',
+                showMarkers:false
+            },
+            {
+                type: 'line',
+                highlight: {
+                    size: 7,
+                    radius: 7
+                },
+                axis: 'left',
+                xField: 'T',
+                yField: 'P4',
+                showMarkers:false
+            },
+            {
+                type: 'line',
+                highlight: {
+                    size: 7,
+                    radius: 7
+                },
+                axis: 'left',
+                xField: 'T',
+                yField: 'T6',
+                showMarkers:false
+            },
+            {
+                type: 'line',
+                highlight: {
+                    size: 7,
+                    radius: 7
+                },
+                axis: 'left',
+                xField: 'T',
+                yField: 'O1',
+                showMarkers:false
+            },
+            {
+                type: 'line',
+                highlight: {
+                    size: 7,
+                    radius: 7
+                },
+                axis: 'left',
+                xField: 'T',
+                yField: 'O2',
+                showMarkers:false
+            },
+        ]
     });
 }
